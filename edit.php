@@ -23,6 +23,10 @@
 
             <h1>Edit article</h1>
 
+            <form class="signup-form edit-form delete-form" action="includes/delete.inc.php" method="post">
+              <button type="submit" name="submit">Delete</button>
+            </form>
+
             <form class="signup-form edit-form" action="includes/update.inc.php" method="post">
               <input type="text" name="title" placeholder="Title" value="<?php echo $title; ?>" />
               <textarea name="content" rows="8" cols="100"><?php echo $row['post_content']; ?></textarea>

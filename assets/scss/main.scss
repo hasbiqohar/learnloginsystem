@@ -167,8 +167,9 @@ button {
 button:hover,
 button:active,
 button:focus {
-  background: #fff;
-  color: #888;
+  background: #ddd;
+  color: #444;
+  border-color: #444;
   margin: 0 5px;
 }
 
@@ -224,4 +225,20 @@ section h1 {
 
 .blog span {
   font-style: italic;
+}
+
+.delete-form button {
+  background-color: #fff;
+  color: #888;
+}
+
+.nav-signup:hover,
+.nav-signup:active,
+.nav-signup:focus,
+.delete-form button:hover,
+.delete-form button:active,
+.delete-form button:focus {
+  color : #fff;
+  background-color: #888;
+  border-color: #888;
 }
