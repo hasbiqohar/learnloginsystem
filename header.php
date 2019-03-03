@@ -21,9 +21,11 @@
         <?php
 
         if (isset($_SESSION['u_id'])) {
-          echo '<li>
-                  <a href="edit.php">Edit</a>
-                </li>';
+          ?>
+          <li>
+            <a href="edit.php">Edit</a>
+          </li>
+          <?php 
         }
 
          ?>

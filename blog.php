@@ -13,20 +13,39 @@
     $resultCheck = mysqli_num_rows($result);
 
     while($row = mysqli_fetch_assoc($result)) {
-        ?>
-          <h2>
-            <?php echo $row['post_title']; ?>
-          </h2>
-          <p>
-            <?php echo $row['post_time']; ?>
-          </p>
-          <span>
-            <?php echo $row['post_author']; ?>
-          </span>
-          <p>
-            <?php echo $row['post_content']; ?>
-          </p>
-        <?php
+        if (isset($_SESSION['u_id'])) {
+          ?>
+            <a href="update.php">
+              <h2>
+                <?php echo $row['post_title']; ?>
+              </h2>
+            </a>
+            <p>
+              <?php echo $row['post_time']; ?>
+            </p>
+            <span>
+              <?php echo $row['post_author']; ?>
+            </span>
+            <p>
+              <?php echo $row['post_content']; ?>
+            </p>
+          <?php
+        } else {
+          ?>
+            <h2>
+              <?php echo $row['post_title']; ?>
+            </h2>
+            <p>
+              <?php echo $row['post_time']; ?>
+            </p>
+            <span>
+              <?php echo $row['post_author']; ?>
+            </span>
+            <p>
+              <?php echo $row['post_content']; ?>
+            </p>
+          <?php
+        }
     }
 
      ?>
