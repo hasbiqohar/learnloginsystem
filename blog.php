@@ -14,9 +14,10 @@
 
     while($row = mysqli_fetch_assoc($result)) {
         if (isset($_SESSION['u_id'])) {
+
           ?>
-            <a href="update.php">
-              <h2>
+            <a href="edit.php?title=<?php echo $row['post_title'];?>">
+              <h2 style="display: inline;">
                 <?php echo $row['post_title']; ?>
               </h2>
             </a>
