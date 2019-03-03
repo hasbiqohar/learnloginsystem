@@ -17,7 +17,7 @@ if (isset($_POST['submit'])) {
   } else {
 
     date_default_timezone_set('Asia/Jakarta');
-    $dateFormat = date('Y-m-d H:i:s');
+    $dateFormat = date('d-m-Y H:i:s');
 
     $sql = "INSERT INTO posts (post_author, post_title, post_content, post_time) VALUE ('$author', '$title', '$content', '$dateFormat')";
     mysqli_query($conn, $sql);
