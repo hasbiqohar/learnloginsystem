@@ -35,7 +35,17 @@ if (isset($_POST['submit'])) {
           $hashedPwd = password_hash($pwd, PASSWORD_DEFAULT);
 
           $sql = "INSERT INTO users (user_first, user_last, user_email, user_uid, user_password) VALUE ('$first', '$last', '$email', '$uid', '$hashedPwd')";
-          mysqli_query($conn, $sql);
+          $sqlPreparedStmt = "INSERT INTO users (user_first, user_last, user_email, user_uid, user_password) VALUE (?, ?, ?, ?, ?)";
+          $stmt = mysqli_stmt_init($conn);
+
+          if (!mysqli_stmt_prepare($stmt, $sql)) {
+            header("Location: ../signup.php?sql=error");
+            exit();
+          } else {
+            mysqli_stmt_bind_param($stmt, "sssss", $first, $last, $email, $uid, $hashedPwd);
+            mysqli_stmt_execute($stmt);
+          }
+          // mysqli_query($conn, $sql);
           header("Location: ../signup.php?signup=success");
           exit();
 
