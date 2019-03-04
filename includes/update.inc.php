@@ -30,21 +30,42 @@ if (isset($_POST['submit'])) {
     date_default_timezone_set('Asia/Jakarta');
     $dateFormat = date('Y-m-d H:i:s');
 
-    $sql = "INSERT INTO posts (post_author, post_title, post_content, post_time) VALUE ('$author', '$title', '$content', '$dateFormat')";
-    $sql = "UPDATE posts SET post_title='$title', post_content='$content', post_time='$dateFormat' WHERE post_title='$lastTitle'";
-    mysqli_query($conn, $sql);
+    // $sql = "UPDATE posts SET post_title='$title', post_content='$content', post_time='$dateFormat' WHERE post_title='$lastTitle'";
+    // mysqli_query($conn, $sql);
 
-    ?>
+    $sqlPreparedStmt = "UPDATE posts SET post_title=?, post_content=?, post_time=? WHERE post_title=?";
+    $stmt = mysqli_stmt_init($conn);
 
-    <script>
-      alert("Your article has been updated!");
-      window.location.href="../edit.php?post=success";
-    </script>
+    if (!mysqli_stmt_prepare($stmt, $sqlPreparedStmt)) {
+      ?>
 
-    <?php
+      <script>
+        alert("Sorry, database error.");
+        window.location.href="../edit.php?sql=error";
+      </script>
 
-    // header("Location: ../edit.php?post=success");
-    exit();
+      <?php
+      // header("Location: ../signup.php?sql=error");
+      exit();
+    } else {
+
+      mysqli_stmt_bind_param($stmt, "ssss", $title, $content, $dateFormat, $lastTitle);
+      mysqli_stmt_execute($stmt);
+
+      ?>
+
+      <script>
+        alert("Your article has been updated!");
+        window.location.href="../edit.php?post=success";
+      </script>
+
+      <?php
+
+      // header("Location: ../edit.php?post=success");
+      exit();
+    }
+
+
   }
 
 } else {

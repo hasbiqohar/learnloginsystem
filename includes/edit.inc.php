@@ -28,18 +28,39 @@ if (isset($_POST['submit'])) {
     date_default_timezone_set('Asia/Jakarta');
     $dateFormat = date('d-m-Y H:i:s');
 
-    $sql = "INSERT INTO posts (post_author, post_title, post_content, post_time) VALUE ('$author', '$title', '$content', '$dateFormat')";
-    mysqli_query($conn, $sql);
-    ?>
+    // $sql = "INSERT INTO posts (post_author, post_title, post_content, post_time) VALUE ('$author', '$title', '$content', '$dateFormat')";
+    // mysqli_query($conn, $sql);
 
-    <script>
-      alert("Your article has been posted!");
-      window.location.href="../edit.php?post=success";
-    </script>
+    $sqlPreparedStmt = "INSERT INTO posts (post_author, post_title, post_content, post_time) VALUE (?, ?, ?, ?)";
 
-    <?php
-    // header("Location: ../edit.php?post=success");
-    exit();
+    $stmt = mysqli_stmt_init($conn);
+
+    if (!mysqli_stmt_prepare($stmt, $sqlPreparedStmt)) {
+      ?>
+
+      <script>
+        alert("Sorry, database error.");
+        window.location.href="../edit.php?sql=error";
+      </script>
+
+      <?php
+      exit();
+    } else {
+
+      mysqli_stmt_bind_param($stmt, "ssss", $author, $title, $content, $dateFormat);
+      mysqli_stmt_execute($stmt);
+
+      ?>
+
+      <script>
+        alert("Your article has been posted!");
+        window.location.href="../edit.php?post=success";
+      </script>
+
+      <?php
+      // header("Location: ../edit.php?post=success");
+      exit();
+    }
   }
 
 } else {
