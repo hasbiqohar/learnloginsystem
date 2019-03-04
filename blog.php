@@ -7,7 +7,6 @@
 
     include 'includes/dbh.inc.php';
 
-    // $sql = "SELECT * FROM posts";
     $sql = "SELECT * FROM posts ORDER BY post_time DESC";
     $result = mysqli_query($conn, $sql);
     $resultCheck = mysqli_num_rows($result);

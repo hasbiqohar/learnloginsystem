@@ -11,15 +11,39 @@ if (isset($_POST['submit'])) {
   $pwd = mysqli_real_escape_string($conn, $_POST['pwd']);
 
   if (empty($first) || empty($last) || empty($email) || empty($uid) || empty($pwd)) {
-    header("Location: ../signup.php?signup=empty");
+    ?>
+
+    <script>
+      alert("Fill in the blank form!");
+      window.location.href="../signup.php?signup=empty";
+    </script>
+
+    <?php
+    // header("Location: ../signup.php?signup=empty");
     exit();
   } else {
     if (!preg_match("/^([A-Z])([a-z])+$/", $first) || !preg_match("/^([A-Z])([a-z])+$/", $last)) {
-      header("Location: ../signup.php?signup=invalid");
+      ?>
+
+      <script>
+        alert("Your name must be written in capitalize!")
+        window.location.href="../signup.php?signup=invalid";
+      </script>
+
+      <?php
+      // header("Location: ../signup.php?signup=invalid");
       exit();
     } else {
       if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        header("Location: ../signup.php?signup=email");
+        ?>
+
+        <script>
+          alert("Your e-mail is invalid!")
+          window.location.href="../signup.php?signup=email";
+        </script>
+
+        <?php
+        // header("Location: ../signup.php?signup=email");
         exit();
       } else {
 
@@ -28,7 +52,15 @@ if (isset($_POST['submit'])) {
         $resultCheck = mysqli_num_rows($result);
 
         if ($resultCheck > 0) {
-          header("Location: ../signup.php?signup=usertaken");
+          ?>
+
+          <script>
+            alert("Username is taken! Try another name.");
+            window.location.href="../signup.php?signup=usertaken";
+          </script>
+
+          <?php
+          // header("Location: ../signup.php?signup=usertaken");
           exit();
         } else {
 
@@ -39,14 +71,30 @@ if (isset($_POST['submit'])) {
           $stmt = mysqli_stmt_init($conn);
 
           if (!mysqli_stmt_prepare($stmt, $sqlPreparedStmt)) {
-            header("Location: ../signup.php?sql=error");
+            ?>
+
+            <script>
+              alert("Sorry, database error.");
+              window.location.href="../signup.php?sql=error";
+            </script>
+
+            <?php
+            // header("Location: ../signup.php?sql=error");
             exit();
           } else {
             mysqli_stmt_bind_param($stmt, "sssss", $first, $last, $email, $uid, $hashedPwd);
             mysqli_stmt_execute($stmt);
           }
           // mysqli_query($conn, $sql);
-          header("Location: ../signup.php?signup=success");
+          ?>
+
+          <script>
+            alert("Thank you for signing up!");
+            window.location.href="../signup.php?signup=success";
+          </script>
+
+          <?php
+          // header("Location: ../signup.php?signup=success");
           exit();
 
         }
