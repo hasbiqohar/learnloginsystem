@@ -38,7 +38,11 @@ if (isset($_POST['submit'])) {
           $sqlPreparedStmt = "INSERT INTO users (user_first, user_last, user_email, user_uid, user_password) VALUE (?, ?, ?, ?, ?)";
           $stmt = mysqli_stmt_init($conn);
 
+<<<<<<< HEAD
           if (!mysqli_stmt_prepare($stmt, $sql)) {
+=======
+          if (!mysqli_stmt_prepare($stmt, $sqlPreparedStmt)) {
+>>>>>>> logsystem signup prepared statement
             header("Location: ../signup.php?sql=error");
             exit();
           } else {
