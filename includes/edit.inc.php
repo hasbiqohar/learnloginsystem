@@ -12,7 +12,16 @@ if (isset($_POST['submit'])) {
 
   if (empty($title) || empty($content)) {
 
-    header("Location: ../edit.php?post=error");
+    ?>
+
+    <script>
+      alert("Fill in the blank form!");
+      window.location.href="../edit.php?post=empty";
+    </script>
+
+    <?php
+
+    // header("Location: ../edit.php?post=error");
     exit();
   } else {
 
@@ -21,7 +30,15 @@ if (isset($_POST['submit'])) {
 
     $sql = "INSERT INTO posts (post_author, post_title, post_content, post_time) VALUE ('$author', '$title', '$content', '$dateFormat')";
     mysqli_query($conn, $sql);
-    header("Location: ../edit.php?post=success");
+    ?>
+
+    <script>
+      alert("Your article has been posted!");
+      window.location.href="../edit.php?post=success";
+    </script>
+
+    <?php
+    // header("Location: ../edit.php?post=success");
     exit();
   }
 

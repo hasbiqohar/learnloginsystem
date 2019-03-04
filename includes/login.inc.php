@@ -39,7 +39,15 @@ if (isset($_POST['submit'])) {
         $hashedPwdCheck = password_verify($pwd, $row['user_password']);
 
         if ($hashedPwdCheck == false) {
-          header("Location: ../index.php?login=error");
+          ?>
+
+          <script>
+            alert("Sorry. Your password is incorrect!");
+            window.location.href="../index.php?login=error";
+          </script>
+
+          <?php
+          // header("Location: ../index.php?login=error");
           exit();
         } else if ($hashedPwdCheck == true) {
 
