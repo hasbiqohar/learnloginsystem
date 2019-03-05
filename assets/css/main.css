@@ -240,4 +240,17 @@ section h1 {
   border-color: #888;
 }
 
+.error-message,
+.success-message {
+  text-align: center;
+}
+
+.error-message {
+  color: red;
+}
+
+.success-message {
+  color: #6666ff;
+}
+
 /*# sourceMappingURL=main.css.map */
