@@ -253,4 +253,9 @@ section h1 {
   color: #6666ff;
 }
 
+.login-message {
+  float: left;
+  padding: 10px;
+}
+
 /*# sourceMappingURL=main.css.map */

@@ -11,39 +11,15 @@ if (isset($_POST['submit'])) {
   $pwd = mysqli_real_escape_string($conn, $_POST['pwd']);
 
   if (empty($first) || empty($last) || empty($email) || empty($uid) || empty($pwd)) {
-    ?>
-
-    <script>
-      alert("Fill in the blank form!");
-      window.location.href="../signup.php?signup=empty";
-    </script>
-
-    <?php
-    // header("Location: ../signup.php?signup=empty");
+    header("Location: ../signup.php?signup=empty");
     exit();
   } else {
     if (!preg_match("/^([A-Z])([a-z])+$/", $first) || !preg_match("/^([A-Z])([a-z])+$/", $last)) {
-      ?>
-
-      <script>
-        alert("Your name must be written in capitalize!")
-        window.location.href="../signup.php?signup=invalid";
-      </script>
-
-      <?php
-      // header("Location: ../signup.php?signup=invalid");
+      header("Location: ../signup.php?signup=invalidname");
       exit();
     } else {
       if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        ?>
-
-        <script>
-          alert("Your e-mail is invalid!")
-          window.location.href="../signup.php?signup=email";
-        </script>
-
-        <?php
-        // header("Location: ../signup.php?signup=email");
+        header("Location: ../signup.php?signup=invalidemail");
         exit();
       } else {
 
@@ -52,49 +28,23 @@ if (isset($_POST['submit'])) {
         $resultCheck = mysqli_num_rows($result);
 
         if ($resultCheck > 0) {
-          ?>
-
-          <script>
-            alert("Username is taken! Try another name.");
-            window.location.href="../signup.php?signup=usertaken";
-          </script>
-
-          <?php
-          // header("Location: ../signup.php?signup=usertaken");
+          header("Location: ../signup.php?signup=usertaken");
           exit();
         } else {
 
           $hashedPwd = password_hash($pwd, PASSWORD_DEFAULT);
 
-          // $sql = "INSERT INTO users (user_first, user_last, user_email, user_uid, user_password) VALUE ('$first', '$last', '$email', '$uid', '$hashedPwd')";
           $sqlPreparedStmt = "INSERT INTO users (user_first, user_last, user_email, user_uid, user_password) VALUE (?, ?, ?, ?, ?)";
           $stmt = mysqli_stmt_init($conn);
 
           if (!mysqli_stmt_prepare($stmt, $sqlPreparedStmt)) {
-            ?>
-
-            <script>
-              alert("Sorry, database error.");
-              window.location.href="../signup.php?sql=error";
-            </script>
-
-            <?php
-            // header("Location: ../signup.php?sql=error");
+            header("Location: ../signup.php?sql=error");
             exit();
           } else {
             mysqli_stmt_bind_param($stmt, "sssss", $first, $last, $email, $uid, $hashedPwd);
             mysqli_stmt_execute($stmt);
           }
-          // mysqli_query($conn, $sql);
-          ?>
-
-          <script>
-            alert("Thank you for signing up!");
-            window.location.href="../signup.php?signup=success";
-          </script>
-
-          <?php
-          // header("Location: ../signup.php?signup=success");
+          header("Location: ../signup.php?signup=success");
           exit();
 
         }

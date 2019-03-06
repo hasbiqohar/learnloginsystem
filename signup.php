@@ -23,7 +23,7 @@
 
       <?php
       exit();
-    } elseif (strpos($fullURL, "signup=invalid") == true) {
+    } elseif (strpos($fullURL, "signup=invalidname") == true) {
       ?>
 
       <p class="error-message">
@@ -32,7 +32,7 @@
 
       <?php
       exit();
-    } elseif (strpos($fullURL, "signup=email") == true) {
+    } elseif (strpos($fullURL, "signup=invalidemail") == true) {
       ?>
 
       <p class="error-message">
@@ -50,7 +50,7 @@
 
       <?php
       exit();
-    } elseif (strpos($fullURL, "signup=empty") == true) {
+    } elseif (strpos($fullURL, "signup=success") == true) {
       ?>
 
       <p class="success-message">

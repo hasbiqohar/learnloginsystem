@@ -34,36 +34,35 @@ if (isset($_POST['submit'])) {
 
       $result = mysqli_stmt_get_result($stmt);
 
-      if ($row = mysqli_fetch_assoc($result)) {
+      $resultCheck = mysqli_num_rows($result);
 
-        $hashedPwdCheck = password_verify($pwd, $row['user_password']);
+      if ($resultCheck < 1) {
+        header("Location: ../index.php?login=error");
+        exit();
+      } else {
+        if ($row = mysqli_fetch_assoc($result)) {
 
-        if ($hashedPwdCheck == false) {
-          ?>
+          $hashedPwdCheck = password_verify($pwd, $row['user_password']);
 
-          <script>
-            alert("Sorry. Your password is incorrect!");
-            window.location.href="../index.php?login=error";
-          </script>
+          if ($hashedPwdCheck == false) {
+            header("Location: ../index.php?login=error");
+            exit();
+          } else if ($hashedPwdCheck == true) {
 
-          <?php
-          // header("Location: ../index.php?login=error");
-          exit();
-        } else if ($hashedPwdCheck == true) {
+            $_SESSION['u_id'] = $row['user_id'];
+            $_SESSION['u_first'] = $row['user_first'];
+            $_SESSION['u_last'] = $row['user_last'];
+            $_SESSION['u_email'] = $row['user_email'];
+            $_SESSION['u_uid'] = $row['user_uid'];
 
-          $_SESSION['u_id'] = $row['user_id'];
-          $_SESSION['u_first'] = $row['user_first'];
-          $_SESSION['u_last'] = $row['user_last'];
-          $_SESSION['u_email'] = $row['user_email'];
-          $_SESSION['u_uid'] = $row['user_uid'];
+            $userid = $_SESSION['u_uid'];
 
-          $userid = $_SESSION['u_uid'];
+            header("Location: ../index.php?login=success");
+            exit();
 
-          header("Location: ../index.php?login='$userid'");
-          exit();
+          }
 
         }
-
       }
 
     }
