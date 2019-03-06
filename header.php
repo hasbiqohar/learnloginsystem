@@ -74,6 +74,14 @@
                 </p>
 
                 <?php
+              } elseif (isset($_GET['uid'])) {
+                ?>
+
+                <p class="error-message login-message">
+                  Password Error!
+                </p>
+
+                <?php
               } elseif (strpos($fullURL, "login=error") == true) {
                 ?>
 
@@ -83,9 +91,19 @@
 
                 <?php
               }
+
+              if (!isset($_GET['uid'])) {
+                ?>
+                <input type="text" name="uid" placeholder="Username/e-mail" autofocus/>
+                <input type="password" name="pwd" placeholder="Password" />
+                <?php
+              } else {
+                ?>
+                <input type="text" name="uid" placeholder="Username/e-mail" value="<?php echo $_GET['uid']; ?>"/>
+                <input type="password" name="pwd" placeholder="Password" autofocus/>
+                <?php
+              }
               ?>
-              <input type="text" name="uid" placeholder="Username/e-mail" />
-              <input type="password" name="pwd" placeholder="Password" />
               <button type="submit" name="submit">Log in</button>
             </form>
             <a class="nav-signup" href="signup.php">Sign up</a>

@@ -45,7 +45,7 @@ if (isset($_POST['submit'])) {
           $hashedPwdCheck = password_verify($pwd, $row['user_password']);
 
           if ($hashedPwdCheck == false) {
-            header("Location: ../index.php?login=error");
+            header("Location: ../index.php?login=error&uid=$uid");
             exit();
           } else if ($hashedPwdCheck == true) {
 

@@ -7,7 +7,7 @@
 
         if(!isset($_GET['first'])) {
           ?>
-          <input type="text" name="first" placeholder="First Name" />
+          <input type="text" name="first" placeholder="First Name" autofocus/>
           <?php
         } else {
           ?>
@@ -17,7 +17,7 @@
 
         if(!isset($_GET['last'])) {
           ?>
-          <input type="text" name="last" placeholder="Last Name" />
+          <input type="text" name="last" placeholder="Last Name"  autofocus/>
           <?php
         } else {
           ?>
@@ -27,7 +27,7 @@
 
         if(!isset($_GET['email'])) {
           ?>
-          <input type="text" name="email" placeholder="Email" />
+          <input type="text" name="email" placeholder="Email"  autofocus/>
           <?php
         } else {
           ?>
@@ -37,7 +37,7 @@
 
         if(!isset($_GET['uid'])) {
           ?>
-          <input type="text" name="uid" placeholder="Username" />
+          <input type="text" name="uid" placeholder="Username"  autofocus/>
           <?php
         } else {
           ?>
@@ -46,7 +46,7 @@
         }
 
       ?>
-      <input type="password" name="pwd" placeholder="Password" />
+      <input type="password" name="pwd" placeholder="Password"  autofocus/>
       <button type="submit" name="submit">Sign up</button>
     </form>
     <?php
