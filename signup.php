@@ -35,8 +35,17 @@
           <?php
         }
 
+        if(!isset($_GET['uid'])) {
+          ?>
+          <input type="text" name="uid" placeholder="Username" />
+          <?php
+        } else {
+          ?>
+          <input type="text" name="uid" placeholder="Username" value="<?php echo $_GET['uid'];?>"  />
+          <?php
+        }
+
       ?>
-      <input type="text" name="uid" placeholder="Username" />
       <input type="password" name="pwd" placeholder="Password" />
       <button type="submit" name="submit">Sign up</button>
     </form>
@@ -88,6 +97,27 @@
       </p>
 
       <?php
+      exit();
+    } elseif (strpos($fullURL, "signup=pass-too-weak") == true) {
+
+      if (isset($_GET['pwdcnt'])) {
+        ?>
+
+        <p class="error-message">
+          Use at least 8 characters!
+        </p>
+
+        <?php
+      } else {
+        ?>
+
+        <p class="error-message">
+          Use at least one capital letter, one number, one letter!
+        </p>
+
+        <?php
+      }
+
       exit();
     } elseif (strpos($fullURL, "signup=success") == true) {
       ?>

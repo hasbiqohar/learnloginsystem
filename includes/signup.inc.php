@@ -36,10 +36,10 @@ if (isset($_POST['submit'])) {
           $result = mysqli_stmt_get_result($stmt);
           $resultCheck = mysqli_num_rows($result);
 
-          if ($resultCheck > 0) {
-            header("Location: ../signup.php?signup=email-taken&first=$first&last=$last");
-            exit();
-          } else {
+          // if ($resultCheck > 0) {
+          //   header("Location: ../signup.php?signup=email-taken&first=$first&last=$last");
+          //   exit();
+          // } else {
             $sql = "SELECT * FROM users WHERE user_uid=?";
             $stmt = mysqli_stmt_init($conn);
 
@@ -60,22 +60,36 @@ if (isset($_POST['submit'])) {
                 exit();
               } else {
 
-                $hashedPwd = password_hash($pwd, PASSWORD_DEFAULT);
+                if (!preg_match("/^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])([0-9A-Za-z!@#$%]){8,}$/", $pwd)) {
 
-                $sqlPreparedStmt = "INSERT INTO users (user_first, user_last, user_email, user_uid, user_password) VALUE (?, ?, ?, ?, ?)";
-                $stmt = mysqli_stmt_init($conn);
+                  $pwdCount = strlen($pwd);
 
-                if (!mysqli_stmt_prepare($stmt, $sqlPreparedStmt)) {
-                  header("Location: ../signup.php?sql=error");
+                  if ($pwdCount >= 8) {
+                    header("Location: ../signup.php?signup=pass-too-weak&first=$first&last=$last&email=$email&uid=$uid");
+                  } else {
+                    header("Location: ../signup.php?signup=pass-too-weak&pwdcnt=$pwdCount&first=$first&last=$last&email=$email&uid=$uid");
+                  }
+
                   exit();
                 } else {
-                  mysqli_stmt_bind_param($stmt, "sssss", $first, $last, $email, $uid, $hashedPwd);
-                  mysqli_stmt_execute($stmt);
+                  $hashedPwd = password_hash($pwd, PASSWORD_DEFAULT);
+
+                  $sqlPreparedStmt = "INSERT INTO users (user_first, user_last, user_email, user_uid, user_password) VALUE (?, ?, ?, ?, ?)";
+                  $stmt = mysqli_stmt_init($conn);
+
+                  if (!mysqli_stmt_prepare($stmt, $sqlPreparedStmt)) {
+                    header("Location: ../signup.php?sql=error");
+                    exit();
+                  } else {
+                    mysqli_stmt_bind_param($stmt, "sssss", $first, $last, $email, $uid, $hashedPwd);
+                    mysqli_stmt_execute($stmt);
+                  }
+                  header("Location: ../signup.php?signup=success&$pwd");
+                  exit();
                 }
-                header("Location: ../signup.php?signup=success");
-                exit();
+
               }
-            }
+            // }
           }
 
         }
